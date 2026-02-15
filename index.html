@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>性癖瓶 Ver.8.2</title>
+    <title>性癖瓶 Ver.8.4</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
     <style>
         :root { --bg: #fdfbfb; --accent: #ff4d79; --rule-color: #e63946; }
@@ -11,11 +11,10 @@
         input[type="text"] { -webkit-user-select: text; user-select: text; }
 
         body { font-family: sans-serif; background: var(--bg); display: flex; flex-direction: column; align-items: center; padding: 15px; color: #444; margin: 0; }
-        .main-title { font-size: 1.8rem; font-weight: bold; margin: 20px 0 5px 0; color: #333; letter-spacing: 3px; }
+        .main-title { font-size: 1.6rem; font-weight: bold; margin: 20px 0 10px 0; color: #333; letter-spacing: 2px; }
 
-        /* タブセクター */
         .mode-tabs { display: flex; gap: 10px; margin-bottom: 15px; }
-        .tab-btn { padding: 5px 20px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; cursor: pointer; border: 2px solid #ddd; color: #aaa; transition: 0.3s; background: white; }
+        .tab-btn { padding: 6px 18px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; cursor: pointer; border: 2px solid #ddd; color: #aaa; transition: 0.3s; background: white; }
         .tab-btn.active { border-color: var(--accent); color: var(--accent); background: #fff0f3; }
 
         .rule-box { border: 2px solid var(--rule-color); background: #fff5f5; border-radius: 12px; padding: 15px; margin-bottom: 25px; max-width: 500px; width: 95%; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
@@ -24,6 +23,7 @@
         .guide-item { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; font-weight: bold; }
         .color-chip { width: 18px; height: 18px; border-radius: 4px; border: 1px solid rgba(0,0,0,0.1); }
         .usage-notes { font-size: 0.75rem; color: #666; border-top: 1px solid #eee; padding-top: 10px; line-height: 1.5; }
+        .warning-note { color: var(--rule-color); font-weight: bold; margin-top: 5px; display: block; }
 
         .container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; max-width: 900px; }
         @media (min-width: 600px) { .container { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 20px; } }
@@ -33,11 +33,11 @@
         .drag-handle { position: absolute; top: 12px; left: 10px; cursor: grab; font-size: 1.2rem; color: #ddd; z-index: 10; pointer-events: auto !important; }
         .lock-btn { position: absolute; top: 8px; right: 8px; cursor: pointer; font-size: 1.2rem; color: #ccc; z-index: 10; pointer-events: auto !important; }
 
-        input[type="text"] { width: 85%; border: none; border-bottom: 1px solid #ddd; text-align: center; font-weight: bold; font-size: 0.85rem; background: transparent; margin: 15px 0 8px 0; }
+        input[type="text"] { width: 85%; border: none; border-bottom: 1px solid #ddd; text-align: center; font-weight: bold; font-size: 0.85rem; background: transparent; margin: 15px 0 8px 0; color: #333 !important; }
 
         .bottle-frame { width: 60px; height: 90px; border: 3px solid #333; border-radius: 2px 2px 20px 20px; margin: 10px auto; position: relative; overflow: hidden; background: #f0f0f0; }
         .liquid { position: absolute; bottom: 0; width: 100%; transition: height 0.1s linear; }
-        .cap { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 40px; height: 12px; background: #444; border-radius: 3px; transition: 0.3s; z-index: 5; }
+        .cap { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 40px; height: 12px; background: #444; border-radius: 3px; z-index: 5; transition: 0.3s; }
         .locked .cap { top: 3px; }
 
         .p-btn { width: 35px; height: 35px; border-radius: 50%; border: none; background: #eee; cursor: pointer; font-size: 1.2rem; }
@@ -61,7 +61,7 @@
     </style>
 </head>
 <body oncontextmenu="return false;">
-    <div class="main-title">【性癖瓶】</div>
+    <div class="main-title">【あなただけの性癖瓶】</div>
 
     <div class="mode-tabs">
         <div class="tab-btn active" onclick="setTab(this)">2D / 二次元</div>
@@ -69,15 +69,20 @@
     </div>
 
     <div class="rule-box">
-        <h2>◾︎ 性癖瓶のルール ◾︎</h2>
+        <h2>◀︎ 性癖瓶のルール ▶︎</h2>
         <div class="color-guide">
             <div class="guide-item"><div class="color-chip" style="background: #ff5d8f;"></div><span>ピンク：好き / 執着 / 興奮</span></div>
             <div class="guide-item"><div class="color-chip" style="background: #94a3b8;"></div><span>グレー：無関心 / 微妙</span></div>
             <div class="guide-item"><div class="color-chip" style="background: #6366f1;"></div><span>青色：嫌い / 苦手 / 地雷</span></div>
         </div>
         <div class="usage-notes">
-            ・<strong>量・濃度:</strong> ＋－ボタン長押し、または下のバーで調整。<br>
-            ・<strong>並び替え:</strong> 左上の「⠿」をドラッグして移動。
+            ・<strong>量:</strong> ボタン長押しで注入。プラスとマイナスボタンで調整してください。<br>
+            ・<strong>濃度:</strong> 下のバーで本気度（不透明度）を調整してください。<br>
+            ・<strong>瓶の追加:</strong> 『自由に追加』または『下部のプリセット』から自由に追加ができます。<br>
+            ・<strong>並び替え:</strong> 左上の「⠿」をドラッグして順番を入れ替えられます。<br>
+            ・<strong>保存:</strong> 右上の「🔓」で内容をロックできます。<br>
+            ・<strong>共有:</strong> 『URLをコピー』して自分だけの性癖瓶を共有しましょう！<br>
+            <span class="warning-note">⚠️ 音が出ます。周囲に注意してください。</span>
         </div>
     </div>
 
@@ -89,23 +94,26 @@
     </div>
 
     <div class="preset-container">
-        <div class="preset-label">部位・質感</div>
+        <div class="preset-label">部位・身体</div>
         <div class="preset-group" id="pre-1"></div>
-        <div class="preset-label">関係・シチュエーション</div>
+        <div class="preset-label">関係・シチュ</div>
         <div class="preset-group" id="pre-2"></div>
-        <div class="preset-label">性向・情緒</div>
+        <div class="preset-label">性向・属性</div>
         <div class="preset-group" id="pre-3"></div>
-        <div class="preset-label">雰囲気・概念</div>
+        <div class="preset-label">行為・行動</div>
         <div class="preset-group" id="pre-4"></div>
+        <div class="preset-label">タイプ</div>
+        <div class="preset-group" id="pre-5"></div>
     </div>
 
     <script>
         const PRESET_COLORS = ['#ff5d8f', '#94a3b8', '#6366f1'];
         const PRESETS = [
-            {id:'pre-1', items:['目隠し', '喉仏', '浮き出た血管', '腰のライン', '泣きぼくろ', '耳裏', '指の節', '筋肉痛', '産毛', '心音', '低い声', '微熱', '汗の跡', '冷たい指', '薄い唇', '大きな手', '香水', '眼鏡', 'タトゥー', '痣']},
-            {id:'pre-2', items:['共犯関係', '片想い', '禁断', '再会', 'すれ違い', '秘密の共有', '監禁', '心中', '擬似家族', '幼馴染', '下剋上', '救済', '絶縁', '遺言', '雨宿り', '看病', '嫉妬', '略奪', '嘘', '契約']},
-            {id:'pre-3', items:['執着', '独占欲', '依存', '優越感', '劣等感', '支配', '服従', '焦燥', '恍惚', '背徳感', '絶望', '祈り', '狂信', '自己犠牲', '情緒不安定', '加虐心', '被虐心', '諦念', '独白', '執念']},
-            {id:'pre-4', items:['宵闇', '静寂', '廃墟', '不穏', '潔癖', '退廃', '神聖', '無機質', '混沌', 'ノスタルジー', '白昼夢', '深海', '酸素不足', '残光', '沈黙', '微睡み', '終末', '箱庭', '境界線', '永遠']}
+            {id:'pre-1', items:['長身','日焼け・褐色','貧乳・微乳','巨乳','お尻']},
+            {id:'pre-2', items:['体格差','主従','密室','コスプレ','お漏らし']},
+            {id:'pre-3', items:['ロリ','ショタ','お姉さん','妹・姉','幼馴染','ギャル','TS','ツンデレ','同い年','ローション・オイル','汗','小悪魔']},
+            {id:'pre-4', items:['あくび','くしゃみ','声','首絞め','踏みつけ','命令','目隠し','放置','拘束','緊縛','NTR','野外・露出','キス','ハグ','催眠']},
+            {id:'pre-5', items:['外国人・ハーフ','男の娘']}
         ];
         
         let bottles = [];
@@ -134,17 +142,21 @@
         function init() {
             const params = new URLSearchParams(window.location.search).get('d');
             if (params) { try { bottles = JSON.parse(decodeURIComponent(escape(atob(params)))); } catch (e) { console.error(e); } }
-            if (bottles.length === 0) bottles = [{ name: '執着', color: PRESET_COLORS[0], level: 50, alpha: 0.8, locked: false }];
+            if (bottles.length === 0) bottles = [{ name: '首筋', color: PRESET_COLORS[0], level: 50, alpha: 0.8, locked: false }];
             
             PRESETS.forEach(p => {
                 const group = document.getElementById(p.id);
-                p.items.forEach(name => {
-                    const btn = document.createElement('div');
-                    btn.className = 'preset-btn';
-                    btn.innerText = name;
-                    btn.onclick = () => addPresetBottle(name);
-                    group.appendChild(btn);
-                });
+                if(group) {
+                    p.items.forEach(name => {
+                        if(name) {
+                            const btn = document.createElement('div');
+                            btn.className = 'preset-btn';
+                            btn.innerText = name;
+                            btn.onclick = () => addPresetBottle(name);
+                            group.appendChild(btn);
+                        }
+                    });
+                }
             });
             render();
             setupSortable();
@@ -203,14 +215,17 @@
             initAudio();
             if (bottles[i].locked) return;
             if (audioCtx.state === 'suspended') audioCtx.resume();
+            if (pressInterval) return;
             pressInterval = setInterval(() => {
                 let old = bottles[i].level;
                 bottles[i].level = Math.max(0, Math.min(100, bottles[i].level + diff));
                 if (old !== bottles[i].level) {
                     playSound(150 + Math.random()*15, 'sine', 0.05, 0.015);
                     const card = document.querySelector(`[data-index="${i}"]`);
-                    card.querySelector('.liquid').style.height = bottles[i].level + '%';
-                    card.querySelector('span').innerText = bottles[i].level + '%';
+                    if(card) {
+                        card.querySelector('.liquid').style.height = bottles[i].level + '%';
+                        card.querySelector('span').innerText = bottles[i].level + '%';
+                    }
                 }
             }, 60);
         }
@@ -221,7 +236,7 @@
         function updateAlpha(i, val) { bottles[i].alpha = parseFloat(val); if(!bottles[i].locked) render(); }
         function addBottle() { bottles.push({ name: '新項目', color: PRESET_COLORS[0], level: 0, alpha: 0.8, locked: false }); render(); }
         function addPresetBottle(name) { bottles.push({ name: name, color: PRESET_COLORS[0], level: 0, alpha: 0.8, locked: false }); render(); }
-        function removeBottle(i) { if(confirm(bottles[i].name + 'を削除？')){ bottles.splice(i, 1); render(); } }
+        function removeBottle(i) { if(confirm(bottles[i].name + 'を削除しますか？')){ bottles.splice(i, 1); render(); } }
         
         function generateShareURL(e) { 
             const data = btoa(unescape(encodeURIComponent(JSON.stringify(bottles)))); 
